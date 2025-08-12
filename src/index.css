@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+     @font-face {
+       font-family: 'Liter-Regular';
+       src: url('./fonts/Liter-Regular.ttf') format('truetype');
+       font-weight: normal;
+       font-style: normal;
+     }
+
+@layer base {
+  html{
+    scroll-behavior: smooth;
+  }
+  body{
+    font-family: Liter-Regular, sans-serif;
+  }
+}
