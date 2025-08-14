@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
      @font-face {
-       font-family: 'Liter-Regular';
-       src: url('./fonts/Liter-Regular.ttf') format('truetype');
+       font-family: 'GT-Planar';
+       src: url('./fonts/GT-Planar-Regular-Trial-BF63bcd9a5c44bb.otf') format('truetype');
        font-weight: normal;
        font-style: normal;
      }
+:root {
+  --background-color: hsl(36, 29.4%, 90%);
+  --primary-color:hsl(170.9, 37.5%, 34.5%);
+}
+
 
 @layer base {
-  html{
-    scroll-behavior: smooth;
-  }
+
   body{
-    font-family: Liter-Regular, sans-serif;
+    font-family: 'GT-Planar', sans-serif;
+    background-color: var(--background-color);
+    color: var(--primary-color);
   }
 }
+

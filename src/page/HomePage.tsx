@@ -3,13 +3,13 @@ import { FaArrowRight, FaLightbulb, FaRocket, FaUsers } from "react-icons/fa";
 
 export default function HomePage() {
   return (
-    <div className="home-page min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="home-page min-h-screen ">
       <NavbarUser />
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 flex flex-col items-center">
         <h1 className="text-5xl md:text-6xl font-bold text-center text-gray-800 mb-6">
-          Welcome to <span className="text-indigo-600">KupVabb</span>
+          Welcome to <span className="text-indigo-600">Kupvabb</span>
         </h1>
         <p className="text-xl text-gray-600 text-center max-w-2xl mb-10">
           Your platform for connecting, creating, and collaborating with amazing

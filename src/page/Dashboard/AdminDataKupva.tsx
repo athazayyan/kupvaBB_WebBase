@@ -264,6 +264,7 @@ const KupvaFormModal = ({ isOpen, onClose, onSave, editData }: KupvaFormModalPro
 const SearchAndFilter = ({ onSearch }: SearchAndFilterProps) => {
     return (
         
+
         <div className="mb-6 flex items-center gap-2 bg-white rounded-lg shadow-sm p-4">
             
             <div className="relative flex-1">
@@ -287,7 +288,7 @@ const SearchAndFilter = ({ onSearch }: SearchAndFilterProps) => {
 const KupvaTable = ({ data, onEdit }: KupvaTableProps) => {
     return (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                        <NavbarAdmin></NavbarAdmin>
+            <NavbarAdmin></NavbarAdmin>
 
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
