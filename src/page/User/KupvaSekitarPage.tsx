@@ -26,7 +26,7 @@ export default function KupvaSekitarPage() {
     const [selectedKupva, setSelectedKupva] = useState<number | null>(null);
 
     return (
-        <div className="kupva-sekitar-page bg-gray-50 min-h-screen">
+        <div className="kupva-sekitar-page  min-h-screen">
             <NavbarUser />
             
             <div className="container mx-auto px-4 py-8">
@@ -40,8 +40,8 @@ export default function KupvaSekitarPage() {
                 </div>
                 
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-2">KUPVA Di Sekitar Anda</h1>
-                    <p className="text-gray-600 text-lg">Money changers (KUPVA) di Provinsi Aceh</p>
+                    <h1 className="text-4xl font-bold  mb-2">KUPVA Di Sekitar Anda</h1>
+                    <p className=" text-lg">Money changers (KUPVA) di Provinsi Aceh</p>
                 </div>
                 
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
@@ -70,14 +70,14 @@ export default function KupvaSekitarPage() {
                                     <Popup>
                                         <div className="p-1">
                                             <h3 className="font-bold text-lg text-blue-700">{kupva.name}</h3>
-                                            <div className="flex items-center text-gray-600 mt-1">
+                                            <div className="flex items-center  mt-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg>
                                                 <p>{kupva.address}</p>
                                             </div>
-                                            <div className="flex items-center text-gray-600 mt-1">
+                                            <div className="flex items-center  mt-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
@@ -93,7 +93,7 @@ export default function KupvaSekitarPage() {
                 </div>
                 
                 <div className="kupva-list">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Daftar KUPVA</h2>
+                    <h2 className="text-2xl font-bold mb-6  border-b pb-2">Daftar KUPVA</h2>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {kupvaData.map(kupva => (
                             <div 
@@ -102,14 +102,14 @@ export default function KupvaSekitarPage() {
                                 onClick={() => setSelectedKupva(kupva.id)}
                             >
                                 <h3 className="font-bold text-lg text-blue-700">{kupva.name}</h3>
-                                <div className="flex items-center text-gray-600 mt-2">
+                                <div className="flex items-center  mt-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                     <p>{kupva.address}</p>
                                 </div>
-                                <div className="flex items-center text-gray-600 mt-1">
+                                <div className="flex items-center  mt-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>

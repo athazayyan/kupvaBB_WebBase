@@ -71,7 +71,7 @@ export default function InformasiPage() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen ">
             <NavbarUser />
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Hero Section */}
@@ -82,7 +82,7 @@ export default function InformasiPage() {
                     >
                         ← Kembali
                     </a>
-                    <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+                    <h1 className="text-4xl sm:text-5xl font-bold  leading-tight">
                         {data ? data.title : "Informasi"}
                     </h1>
                 </div>
@@ -92,16 +92,17 @@ export default function InformasiPage() {
                     <div className="grid gap-12">
                         {data.articles.map((article: Article) => (
                             <article key={article.id} className="border-b border-gray-200 pb-8">
+                                <p>--</p>
                                 <span className="inline-block bg-blue-100 text-blue-800 text-xs font-sans uppercase tracking-wide px-2 py-1 rounded mb-2">
                                     {article.tag}
                                 </span>
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                                <h2 className="text-2xl sm:text-3xl font-semibold  mb-3">
                                     {article.judul}
                                 </h2>
                                 <p className="text-sm text-gray-500 font-sans mb-4">
                                     Oleh {article.penulis} | {article.tanggal}
                                 </p>
-                                <p className="text-lg text-gray-700 font-sans leading-relaxed">
+                                <p className="text-lg   font-sans leading-relaxed">
                                     {article.berita}
                                 </p>
                             </article>

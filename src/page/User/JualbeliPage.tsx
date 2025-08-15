@@ -63,7 +63,7 @@ export default function JualbeliPage() {
     }, []);
 
     return (
-        <div className="jualbeli-page bg-gray-50 min-h-screen">
+        <div className="jualbeli-page  min-h-screen">
             <NavbarUser />
             <div className="container mx-auto py-8 px-4">
                 <div className="flex items-center mb-6">
@@ -103,7 +103,7 @@ export default function JualbeliPage() {
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {exchangeRates.length > 0 ? (
                                     exchangeRates.map((rate) => (
-                                        <tr key={rate.id} className="hover:bg-gray-50">
+                                        <tr key={rate.id} className="hover:">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {rate.mata_uang?.nama || 'N/A'}
                                             </td>

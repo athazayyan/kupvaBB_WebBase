@@ -1,104 +1,81 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export function NavbarUser() {
-  const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
-  return (
-    <header className=" backdrop-blur-3xl rounded-xl sm:mx-6 lg:mx-8 mt-4 sticky top-4 z-50">
-      <nav className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="/" className="flex items-center">
-            Home /
-          </a>
+    const menuItems = [
+        { name: "Jual Beli", link: "/jualbeli" },
+        { name: "Informasi", link: "/informasi" },
+        { name: "Kupva Di Sekitar Anda", link: "/info-kupva" },
+        { name: "Login", link: "/login" },
+    ];
 
-          {/* Hamburger Button for Mobile */}
-          <button
-            className="sm:hidden  hover:text-emerald-950 focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={
-                  isMenuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16M4 18h16"
-                }
-              />
-            </svg>
-          </button>
+    return (
+        <>
+            <nav className="hidden min-[570px]:flex pointer-events-auto mt-8 px-3 rounded-lg bg-neutral-800/60 w-fit mx-auto text-sm md:text-base z-40">
+            <ul className="flex items-center gap-4">
+                <a 
+                className="py-3 px-2 font-rethink transition-colors text-accent-300 hover:text-accent-300" 
+                href="/"
+                >
+                Home
+                </a>
+                
+                {menuItems.map((item) => (
+                <a 
+                    key={item.name}
+                    className="py-3 px-2 font-rethink text-neutral-200 hover:text-neutral-50 transition-colors" 
+                    href={item.link}
+                >
+                    {item.name}
+                </a>
+                ))}
+                
+                <div className="w-px bg-neutral-500 h-[18px]"></div>
+            </ul>
+            </nav>
 
-          {/* Navigation Links */}
-          <ul
-            className={`${
-              isMenuOpen ? "block" : "hidden"
-            } sm:flex sm:space-x-8 absolute sm:static top-full left-0 right-0 bg-white/80 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none rounded-b-xl sm:rounded-none shadow-md sm:shadow-none p-4 sm:p-0 font-sans text-sm font-medium transition-all duration-300 ease-in-out`}
-          >
-            <li>
-              <a
-                href="/jualbeli"
-                className={`relative block py-2 sm:py-0  hover:text-emerald-950 transition-colors ${
-                  location.pathname === "/jualbeli" ? "text-blue-600" : ""
-                }`}
-              >
-                Jual Beli
-                {location.pathname === "/jualbeli" && (
-                  <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></span>
-                )}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/informasi"
-                className={`relative block py-2 sm:py-0  hover:text-emerald-950 transition-colors ${
-                  location.pathname === "/informasi" ? "text-blue-600" : ""
-                }`}
-              >
-                Informasi
-                {location.pathname === "/informasi" && (
-                  <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></span>
-                )}
-              </a>
-            </li>
-            <li>
-              <a
-                href="/info-kupva"
-                className={`relative block py-2 sm:py-0  hover:text-emerald-950 transition-colors ${
-                  location.pathname === "/info-kupva" ? "text-blue-600" : ""
-                }`}
-              >
-                Kupva Di Sekitar Anda
-                {location.pathname === "/info-kupva" && (
-                  <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></span>
-                )}
-              </a>
-            </li>
-            <li className="sm:ml-4">
-              <a
-                href="/login"
-                className="block py-2 sm:py-1 px-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-200"
-              >
-                Login
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-  );
+            {/* Mobile Menu Section */}
+            <div className="min-[570px]:hidden w-full relative">
+                {/* Mobile Menu Button - Fixed to the right */}
+                <div className="fixed top-4 right-4 z-50">
+                    <button
+                    className="flex items-center space-x-1 bg-amber-500 p-2 rounded-lg shadow-lg"
+                    onClick={toggleMenu}
+                    >
+                    <span>Menu</span>
+                    <ChevronDownIcon className={`w-6 h-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                </div>
+
+                {/* Mobile Dropdown with fixed positioning */}
+                <div 
+                    className={`fixed top-16 w-full  transition-all duration-300 opacity-0 z-40 bg-amber-200 rounded-lg mx-2 -left-2 ${
+                        isMenuOpen ? 'opacity-100 pointer-events-auto' : 'pointer-events-none'
+                    }`}
+                    style={{ 
+                        transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
+                        visibility: isMenuOpen ? 'visible' : 'hidden'
+                    }}
+                >
+                    <div className="px-4 pb-4 space-y-2 mt-2">
+                    {menuItems.map((item) => (
+                        <a
+                        key={item.name}
+                        href={item.link}
+                        className="block rounded-lg p-4 transition bg-black/30 hover:bg-black/50"
+                        >
+                        <div className="font-medium">{item.name}</div>
+                        </a>
+                    ))}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
