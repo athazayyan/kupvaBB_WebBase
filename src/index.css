@@ -6,6 +6,12 @@
         font-weight: normal;
         font-style: normal;
       }
+      @font-face {
+        font-family: 'P22-Mackinac';
+        src: url('./fonts/P22-Mackinac-Regular.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+      }
     :root {
       --background-color: hsl(34, 24%, 94%);
       --primary-color:hsl(170.9, 37.5%, 34.5%);

@@ -1,81 +1,97 @@
 import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Menu, X } from "lucide-react";
 
 export function NavbarUser() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  const menuItems = [
+    { name: "Jual Beli", link: "/jualbeli" },
+    { name: "Kupva Di Sekitar Anda", link: "/info-kupva"},
+  ];
 
-    const menuItems = [
-        { name: "Jual Beli", link: "/jualbeli" },
-        { name: "Informasi", link: "/informasi" },
-        { name: "Kupva Di Sekitar Anda", link: "/info-kupva" },
-        { name: "Login", link: "/login" },
-    ];
-
-    return (
-        <>
-            <nav className="hidden min-[570px]:flex pointer-events-auto mt-8 px-3 rounded-lg bg-neutral-800/60 w-fit mx-auto text-sm md:text-base z-40">
-            <ul className="flex items-center gap-4">
-                <a 
-                className="py-3 px-2 font-rethink transition-colors text-accent-300 hover:text-accent-300" 
-                href="/"
-                >
-                Home
-                </a>
-                
-                {menuItems.map((item) => (
-                <a 
-                    key={item.name}
-                    className="py-3 px-2 font-rethink text-neutral-200 hover:text-neutral-50 transition-colors" 
-                    href={item.link}
-                >
-                    {item.name}
-                </a>
-                ))}
-                
-                <div className="w-px bg-neutral-500 h-[18px]"></div>
-            </ul>
-            </nav>
-
-            {/* Mobile Menu Section */}
-            <div className="min-[570px]:hidden w-full relative">
-                {/* Mobile Menu Button - Fixed to the right */}
-                <div className="fixed top-4 right-4 z-50">
-                    <button
-                    className="flex items-center space-x-1 bg-amber-500 p-2 rounded-lg shadow-lg"
-                    onClick={toggleMenu}
-                    >
-                    <span>Menu</span>
-                    <ChevronDownIcon className={`w-6 h-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                </div>
-
-                {/* Mobile Dropdown with fixed positioning */}
-                <div 
-                    className={`fixed top-16 w-full  transition-all duration-300 opacity-0 z-40 bg-amber-200 rounded-lg mx-2 -left-2 ${
-                        isMenuOpen ? 'opacity-100 pointer-events-auto' : 'pointer-events-none'
-                    }`}
-                    style={{ 
-                        transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
-                        visibility: isMenuOpen ? 'visible' : 'hidden'
-                    }}
-                >
-                    <div className="px-4 pb-4 space-y-2 mt-2">
-                    {menuItems.map((item) => (
-                        <a
-                        key={item.name}
-                        href={item.link}
-                        className="block rounded-lg p-4 transition bg-black/30 hover:bg-black/50"
-                        >
-                        <div className="font-medium">{item.name}</div>
-                        </a>
-                    ))}
-                    </div>
-                </div>
+  return (
+    <>
+      <nav className="hidden md:block fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="bg-[var(--primary-color)] backdrop-blur-md rounded-full px-8 py-4 shadow-2xl ">
+          <div className="flex items-center space-x-8">
+           <a href="/" className="text-xl hover:scale-102 transition-transform font-bold text-white hover:text-[var(--secondary-color)]">
+  Kurs<span className="text-[var(--secondary-color)] hover:text-white">Kita</span>
+</a>
+            
+            <div className="w-px h-8 bg-slate-600"></div>
+            
+            <div className="flex items-center space-x-6">
+              {menuItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.link}
+              className="group relative text-slate-300 hover:text-white font-medium transition-colors"
+            >
+              {item.name}
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--secondary-color)] group-hover:w-full transition-all duration-300"></div>
+            </a>
+              ))}
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </nav>
+
+      <div className="md:hidden">
+        <button
+          onClick={toggleMenu}
+          className="fixed top-4 right-4 z-50 bg-[var(--primary-color)] p-3 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+        >
+          {isMenuOpen ? (
+            <X className="w-6 h-6 text-white " />
+          ) : (
+            <Menu className="w-6 h-6 text-white " />
+          )}
+        </button>
+
+        {isMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-sky-200 bg-opacity-50 backdrop-blur-sm z-30"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+
+        <div className={`fixed top-0 right-0 h-full w-80 bg-[var(--primary-color)] z-40 transform transition-transform duration-300 ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}>
+          <div className="p-6 mt-16">
+            <div className="mb-8">
+              <h2 className="text-3xl font-black text-white">
+                <a href="/">KursKita</a>
+              </h2>
+            </div>
+
+            <div className="space-y-3">
+         
+              
+              {menuItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  className="block p-4 rounded-xl text-white font-medium border-2 border-[var(--secondary-color)] transition-all transform hover:scale-105"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{item.name}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
+
+export default NavbarUser;
