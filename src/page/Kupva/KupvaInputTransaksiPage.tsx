@@ -2,11 +2,9 @@ import { NavbarKupva } from "../../components/utils/NavbarKupva";
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import {
-  Calendar,
   DollarSign,
   User,
   FileText,
-  CreditCard,
   Calculator,
   Clock,
   TrendingUp,
