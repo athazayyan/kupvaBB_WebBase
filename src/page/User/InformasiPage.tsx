@@ -1,5 +1,6 @@
 import { NavbarUser } from "../../components/utils/NavbarUser";
 import { useEffect, useState } from "react";
+import { Footer } from "../../components/user-component/Footer";
 
 interface Article {
     id: string | number;
@@ -112,6 +113,7 @@ export default function InformasiPage() {
                     <p className="text-lg text-gray-700 font-sans">Memuat berita...</p>
                 )}
             </div>
+            <Footer />
         </div>
     );
 }

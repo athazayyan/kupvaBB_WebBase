@@ -29,7 +29,7 @@ export function NavbarUser() {
             <a
               key={item.name}
               href={item.link}
-              className="group relative text-slate-300 hover:text-white font-medium transition-colors"
+              className="group relative text-white hover:text-slate-300 font-medium transition-colors"
             >
               {item.name}
               <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--secondary-color)] group-hover:w-full transition-all duration-300"></div>
