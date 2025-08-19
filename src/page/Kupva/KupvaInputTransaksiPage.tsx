@@ -69,7 +69,6 @@ export default function KupvaInputTransaksiPage() {
   });
   const [calculatedTotal, setCalculatedTotal] = useState<number>(0);
 
-  // Format currency to Indonesian format
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 2,

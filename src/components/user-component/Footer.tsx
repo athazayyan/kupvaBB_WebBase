@@ -19,7 +19,7 @@ export function Footer() {
     <footer className="relative mt-40">
       {/* Main Footer */}
       <div
-        style={{ backgroundColor: "hsl(170.9, 37.5%, 34.5%)" }}
+        style={{ backgroundColor: "#326593" }}
         className="text-white"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -27,7 +27,7 @@ export function Footer() {
             {/* Company Info */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <h3 className="text-2xl font-bold">
+                <h3 className="md:text-2xl font-bold">
                   Kurs
                   <span style={{ color: "hsl(206.1, 100%, 87.8%)" }}>Kita</span>
                 </h3>
@@ -199,7 +199,7 @@ export function Footer() {
 
       {/* Bottom Footer */}
       <div
-        style={{ backgroundColor: "hsl(170.9, 37.5%, 24.5%)" }}
+        style={{ backgroundColor: "#025495" }}
         className="text-white py-6"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -243,35 +243,35 @@ export function Footer() {
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div
           style={{ backgroundColor: "hsl(34, 24%, 94%)" }}
-          className="bg-white rounded-2xl shadow-lg p-6 border-4 border-white"
+          className="bg-white rounded-2xl shadow-lg p-6 border-4 border-white text-sm"
         >
-          <div className="grid grid-cols-3 gap-8 text-center">
+          <div className="grid grid-cols-3 gap-8 text-center ">
             <div>
               <div
-                className="text-2xl font-bold"
-                style={{ color: "hsl(170.9, 37.5%, 34.5%)" }}
+                className="md:text-2xl font-bold"
+                style={{ color: "#025495" }}
               >
                 8
               </div>
-              <div className="text-sm text-gray-600">Money Changer</div>
+              <div className="text-xs md:text-sm text-gray-600">Money Changer</div>
             </div>
             <div>
               <div
-                className="text-2xl font-bold"
-                style={{ color: "hsl(170.9, 37.5%, 34.5%)" }}
+                className="md:text-2xl font-bold"
+                style={{ color: "#025495" }}
               >
                 25
               </div>
-              <div className="text-sm text-gray-600">Mata Uang</div>
+              <div className="text-xs md:text-sm text-gray-600">Mata Uang</div>
             </div>
             <div>
               <div
-                className="text-2xl font-bold"
-                style={{ color: "hsl(170.9, 37.5%, 34.5%)" }}
+                className="md:text-2xl font-bold"
+                style={{ color: "#025495" }}
               >
                 1000+
               </div>
-              <div className="text-sm text-gray-600">Pengguna</div>
+              <div className="text-xs md:text-sm text-gray-600">Pengguna</div>
             </div>
           </div>
         </div>

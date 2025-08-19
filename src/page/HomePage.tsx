@@ -22,7 +22,7 @@ export default function HomePage() {
       </div>
       <div className="md:w-1/2 flex justify-center">
         <img 
-          src="/KupvaA.png" 
+          src="/KupvaA.svg" 
           alt="Kupva illustration" 
           className="max-w-full md:max-w-xl"
         />

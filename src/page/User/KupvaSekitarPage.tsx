@@ -161,7 +161,7 @@ export default function KupvaSekitarPage() {
             <NavbarUser />
             
             {/* Header Section */}
-            <div className="pt-24 pb-8" style={{ background: 'linear-gradient(135deg, hsl(170.9, 37.5%, 34.5%) 0%, hsl(170.9, 37.5%, 44.5%) 100%)' }}>
+            <div className="pt-24 pb-8" style={{ background: '#326593' }}>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-white">
                    

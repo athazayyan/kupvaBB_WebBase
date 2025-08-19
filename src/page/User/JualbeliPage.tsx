@@ -152,7 +152,7 @@ export default function JualbeliPage() {
             <NavbarUser />
             
             {/* Header Section */}
-            <div className="pt-24 pb-8" style={{ background: 'linear-gradient(135deg, hsl(170.9, 37.5%, 34.5%) 0%, hsl(170.9, 37.5%, 44.5%) 100%)' }}>
+            <div className="pt-24 pb-8" style={{ background: '#326593' }}>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-white">
                      
@@ -225,7 +225,7 @@ export default function JualbeliPage() {
                         <div className="hidden lg:block bg-white rounded-2xl shadow-lg overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full">
-                                    <thead style={{ backgroundColor: 'hsl(170.9, 37.5%, 34.5%)' }}>
+                                    <thead style={{ backgroundColor: '#326593' }}>
                                         <tr className="text-white">
                                             <th className="px-6 py-4 text-left text-sm font-semibold">Mata Uang</th>
                                             <th className="px-6 py-4 text-left text-sm font-semibold">Kode</th>
