@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavbarUser } from "../../components/utils/NavbarUser";
 import { supabase } from "../../supabaseClient";
-import { Search, Filter, TrendingUp, TrendingDown, Clock, MapPin } from "lucide-react";
+import { Search, Filter, Clock, MapPin } from "lucide-react";
 import { Footer } from "../../components/user-component/Footer";
 
 
@@ -330,7 +330,6 @@ export default function JualbeliPage() {
                                         <div className="grid grid-cols-2 gap-4 mb-4">
                                             <div className="text-center p-3 bg-green-50 rounded-lg">
                                                 <div className="flex items-center justify-center gap-1 mb-1">
-                                                    <TrendingUp className="w-4 h-4 text-green-500" />
                                                     <span className="text-sm text-green-700 font-medium">Beli</span>
                                                 </div>
                                                 <div className="font-bold text-green-600">
@@ -339,7 +338,6 @@ export default function JualbeliPage() {
                                             </div>
                                             <div className="text-center p-3 bg-red-50 rounded-lg">
                                                 <div className="flex items-center justify-center gap-1 mb-1">
-                                                    <TrendingDown className="w-4 h-4 text-red-500" />
                                                     <span className="text-sm text-red-700 font-medium">Jual</span>
                                                 </div>
                                                 <div className="font-bold text-red-600">
