@@ -21,11 +21,13 @@ export default function HomePage() {
         </button>
       </div>
       <div className="md:w-1/2 flex justify-center">
+      <a href="/jualbeli">
         <img 
           src="/KupvaA.svg" 
           alt="Kupva illustration" 
           className="max-w-full md:max-w-xl"
         />
+        </a>
       </div>
     </div>
   </div>

@@ -133,7 +133,7 @@ export function Footer() {
                     <p className="text-white/80 text-sm">
                       Jl. Sudirman No. 123
                       <br />
-                      Jakarta Pusat, 10220
+                      Banda Aceh, 23521
                       <br />
                       Indonesia
                     </p>
@@ -206,7 +206,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <p className="text-white/80 text-sm">
-                © 2025 KursKita. All rights reserved.
+                © 2025 KursKita (Bank Indonesia). All rights reserved.
               </p>
               <div className="flex items-center gap-4 text-sm">
                 <a

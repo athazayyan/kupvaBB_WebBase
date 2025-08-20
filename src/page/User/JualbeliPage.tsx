@@ -158,7 +158,7 @@ export default function JualbeliPage() {
                      
                         <div>
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-                                💱 Kurs Mata Uang
+                                Kurs Mata Uang
                             </h1>
                             <p className="text-white/80 mt-2">Real-time exchange rates from verified money changers</p>
                         </div>
