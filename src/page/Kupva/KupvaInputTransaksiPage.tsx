@@ -272,102 +272,122 @@ export default function KupvaInputTransaksiPage() {
             </p>
           </div>
 
-          {/* Recent Transactions */}
-          <div className="mb-8">
+            {/* Recent Transactions */}
+            <div className="mb-8">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex items-center gap-3 mb-6">
-                <Clock className="w-6 h-6 text-teal-600" />
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Transaksi Terbaru
-                </h2>
+              <Clock className="w-6 h-6 text-teal-600" />
+              <h2 className="text-xl font-semibold text-gray-800">
+              Transaksi Terbaru
+              </h2>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        No. Nota
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Tanggal
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Jenis
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Mata Uang
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Nominal
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Total (IDR)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {recentTransactions?.map((transaksi) => (
-                      <tr key={transaksi.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {transaksi.no_nota}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(transaksi.tanggal).toLocaleDateString(
-                            "id-ID"
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                              transaksi.jenis_transaksi === "Beli"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-blue-100 text-blue-800"
-                            }`}
-                          >
-                            {transaksi.jenis_transaksi}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          <div className="flex items-center gap-2">
-                            <span>
-                              {getCurrencyFlag(
-                                mataUangList.find(
-                                  (m) => m.id === transaksi.mata_uang_id
-                                )?.kode || ""
-                              )}
-                            </span>
-                            <span>
-                              {mataUangList.find(
-                                (m) => m.id === transaksi.mata_uang_id
-                              )?.kode || "-"}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
-                          {formatCurrency(transaksi.nominal)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">
-                          Rp{" "}
-                          {formatCurrency(transaksi.nominal * transaksi.kurs)}
-                        </td>
-                      </tr>
-                    ))}
-                    {recentTransactions.length === 0 && (
-                      <tr>
-                        <td
-                          colSpan={6}
-                          className="px-6 py-8 text-center text-gray-500"
-                        >
-                          Belum ada transaksi terbaru
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+              <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                No. Nota
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Tanggal
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Jenis
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Mata Uang
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Nominal
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total (IDR)
+                </th>
+              </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+              {recentTransactions
+                .filter(transaction => {
+                // Get user ID from token
+                try {
+                  const tokenData = JSON.parse(token || '{}');
+                  const userID = tokenData.user?.id;
+                  // Only show transactions for the current KUPVA user
+                  return transaction.kupva_id === userID;
+                } catch (e) {
+                  return false;
+                }
+                })
+                .map((transaksi) => (
+                <tr key={transaksi.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {transaksi.no_nota}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {new Date(transaksi.tanggal).toLocaleDateString(
+                  "id-ID"
+                )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                <span
+                  className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  transaksi.jenis_transaksi === "Beli"
+                  ? "bg-green-100 text-green-800"
+                  : "bg-blue-100 text-blue-800"
+                  }`}
+                >
+                  {transaksi.jenis_transaksi}
+                </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <span>
+                  {getCurrencyFlag(
+                  mataUangList.find(
+                  (m) => m.id === transaksi.mata_uang_id
+                  )?.kode || ""
+                  )}
+                  </span>
+                  <span>
+                  {mataUangList.find(
+                  (m) => m.id === transaksi.mata_uang_id
+                  )?.kode || "-"}
+                  </span>
+                </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                {formatCurrency(transaksi.nominal)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">
+                Rp{" "}
+                {formatCurrency(transaksi.nominal * transaksi.kurs)}
+                </td>
+                </tr>
+              ))}
+              {recentTransactions.filter(transaction => {
+                try {
+                const tokenData = JSON.parse(token || '{}');
+                const userID = tokenData.user?.id;
+                return transaction.kupva_id === userID;
+                } catch (e) {
+                return false;
+                }
+              }).length === 0 && (
+                <tr>
+                <td
+                colSpan={6}
+                className="px-6 py-8 text-center text-gray-500"
+                >
+                Belum ada transaksi terbaru
+                </td>
+                </tr>
+              )}
+              </tbody>
+              </table>
               </div>
             </div>
-          </div>
+            </div>
 
           {/* Transaction Form */}
           <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -501,41 +521,38 @@ export default function KupvaInputTransaksiPage() {
                       value={formData.nominal}
                       onChange={handleChange}
                       required
-                      step="0.01"
+                      step="  1"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors text-right font-mono"
                       placeholder="0.00"
                     />
                   </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Kurs *
-                        </label>
-                        <div className="relative">
-                        <input
-                            type="text"
-                            name="kurs"
-                            value={formData.kurs.toLocaleString('id-ID', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                            })}
-                            onChange={(e) => {
-                            // Remove non-numeric characters and convert to number
-                            const value = e.target.value.replace(/[^\d,]/g, '').replace(',', '.');
-                            setFormData({
-                                ...formData,
-                                kurs: parseFloat(value) || 0,
-                            });
-                            }}
-                            required
-                            className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors text-right font-mono"
-                            placeholder="0,00"
-                        />
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                            Rp
-                        </span>
-                        </div>
-                    </div>
+                      </label>
+                      <input
+                        type="text"
+                        name="kurs"
+                        value={formData.kurs === 0 ? "" : String(formData.kurs)}
+                        onChange={(e) => {
+                        // Allow digits, decimal point and comma
+                        const value = e.target.value.replace(/[^\d.,]/g, '');
+                        // Convert comma to period for parsing
+                        const normalizedValue = value.replace(',', '.');
+                        setFormData({
+                          ...formData,
+                          kurs: normalizedValue === "" ? 0 : parseFloat(normalizedValue),
+                        });
+                        }}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors"
+                        placeholder=""
+                      />
+                      <p className="mt-1 text-sm text-gray-500 font-mono">
+                        Preview: Rp {formatCurrency(formData.kurs)}
+                      </p>
+                      </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">

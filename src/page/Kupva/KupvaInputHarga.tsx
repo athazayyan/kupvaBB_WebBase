@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavbarKupva } from "../../components/utils/NavbarKupva";
 import { supabase } from "../../supabaseClient";
+import { Search, Filter, Check, X, Eye, EyeOff } from "lucide-react";
 
 interface MataUang {
   id: string;
@@ -18,10 +19,21 @@ interface HargaValas {
 
 export default function KupvaInputHarga() {
   const [mataUangList, setMataUangList] = useState<MataUang[]>([]);
+  const [filteredMataUangList, setFilteredMataUangList] = useState<MataUang[]>(
+    []
+  );
   const [hargaList, setHargaList] = useState<HargaValas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentKupvaId, setCurrentKupvaId] = useState<string | null>(null);
+
+  // Filter states
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState<"all" | "set" | "unset">(
+    "all"
+  );
+  const [sortBy, setSortBy] = useState<"kode" | "nama">("kode");
+  const [showFilters, setShowFilters] = useState(false);
 
   // Check authentication
   const token = localStorage.getItem("sb-yqhsofyqvejmpgwbqlnk-auth-token");
@@ -90,7 +102,8 @@ export default function KupvaInputHarga() {
         // Fetch mata uang (currencies)
         const { data: mataUangData, error: mataUangError } = await supabase
           .from("mata_uang")
-          .select("*");
+          .select("*")
+          .order("kode", { ascending: true });
 
         if (mataUangError) throw mataUangError;
         setMataUangList(mataUangData);
@@ -100,12 +113,12 @@ export default function KupvaInputHarga() {
           .from("harga_valas")
           .select(
             `
-                        id, 
-                        mata_uang_id, 
-                        harga_beli, 
-                        harga_jual,
-                        mata_uang (id, kode, nama)
-                    `
+            id, 
+            mata_uang_id, 
+            harga_beli, 
+            harga_jual,
+            mata_uang (id, kode, nama)
+          `
           )
           .eq("kupva_id", profileData.id);
 
@@ -128,6 +141,43 @@ export default function KupvaInputHarga() {
 
     fetchData();
   }, []);
+
+  // Filter and sort effect
+  useEffect(() => {
+    let filtered = [...mataUangList];
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (mata_uang) =>
+          mata_uang.kode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          mata_uang.nama.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply status filter
+    if (filterStatus !== "all") {
+      filtered = filtered.filter((mata_uang) => {
+        const hasPrice = hargaList.some(
+          (harga) =>
+            harga.mata_uang_id === mata_uang.id &&
+            (harga.harga_beli > 0 || harga.harga_jual > 0)
+        );
+        return filterStatus === "set" ? hasPrice : !hasPrice;
+      });
+    }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      if (sortBy === "kode") {
+        return a.kode.localeCompare(b.kode);
+      } else {
+        return a.nama.localeCompare(b.nama);
+      }
+    });
+
+    setFilteredMataUangList(filtered);
+  }, [mataUangList, hargaList, searchTerm, filterStatus, sortBy]);
 
   const handleUpdateHarga = async (
     mata_uang_id: string,
@@ -198,6 +248,18 @@ export default function KupvaInputHarga() {
     }
   };
 
+  const getStatusStats = () => {
+    const setCount = mataUangList.filter((mata_uang) =>
+      hargaList.some(
+        (harga) =>
+          harga.mata_uang_id === mata_uang.id &&
+          (harga.harga_beli > 0 || harga.harga_jual > 0)
+      )
+    ).length;
+    const unsetCount = mataUangList.length - setCount;
+    return { setCount, unsetCount };
+  };
+
   const HargaForm = ({ mataUang }: { mataUang: MataUang }) => {
     const existingHarga = hargaList.find((h) => h.mata_uang_id === mataUang.id);
     const [hargaBeli, setHargaBeli] = useState(existingHarga?.harga_beli || 0);
@@ -234,24 +296,88 @@ export default function KupvaInputHarga() {
         CAD: "🇨🇦",
         CHF: "🇨🇭",
         CNY: "🇨🇳",
+        HKD: "🇭🇰",
         SGD: "🇸🇬",
         MYR: "🇲🇾",
         THB: "🇹🇭",
         KRW: "🇰🇷",
+        IDR: "🇮🇩",
+        PHP: "🇵🇭",
+        INR: "🇮🇳",
+        PKR: "🇵🇰",
+        BDT: "🇧🇩",
+        VND: "🇻🇳",
+        SAR: "🇸🇦",
+        AED: "🇦🇪",
+        QAR: "🇶🇦",
+        KWD: "🇰🇼",
+        OMR: "🇴🇲",
+        BHD: "🇧🇭",
+        EGP: "🇪🇬",
+        ZAR: "🇿🇦",
+        NGN: "🇳🇬",
+        KES: "🇰🇪",
+        MAD: "🇲🇦",
+        DZD: "🇩🇿",
+        TZS: "🇹🇿",
+        MXN: "🇲🇽",
+        BRL: "🇧🇷",
+        ARS: "🇦🇷",
+        CLP: "🇨🇱",
+        COP: "🇨🇴",
+        PEN: "🇵🇪",
+        UYU: "🇺🇾",
+        BOB: "🇧🇴",
+        PYG: "🇵🇾",
+        NOK: "🇳🇴",
+        SEK: "🇸🇪",
+        DKK: "🇩🇰",
+        CZK: "🇨🇿",
+        PLN: "🇵🇱",
+        HUF: "🇭🇺",
+        RON: "🇷🇴",
+        RUB: "🇷🇺",
+        TRY: "🇹🇷",
+        UAH: "🇺🇦",
+        NZD: "🇳🇿",
+        FJD: "🇫🇯",
+        PGK: "🇵🇬",
+        WST: "🇼🇸",
+        TOP: "🇹🇴",
+        XAU: "🥇",
+        XAG: "🥈",
+        BTC: "₿",
+        ETH: "◆",
       };
       return flags[kode] || "💰";
     };
 
+    const hasPrice =
+      existingHarga &&
+      (existingHarga.harga_beli > 0 || existingHarga.harga_jual > 0);
+
     return (
-      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow mt">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-2xl">{getCurrencyFlag(mataUang.kode)}</span>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">
-              {mataUang.kode}
-            </h3>
-            <p className="text-sm text-gray-600">{mataUang.nama}</p>
+      <div
+        className={`bg-white border rounded-xl p-6 shadow-sm hover:shadow-md transition-all ${
+          hasPrice ? "border-green-200 bg-green-50/30" : "border-gray-200"
+        }`}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">{getCurrencyFlag(mataUang.kode)}</span>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                {mataUang.kode}
+              </h3>
+              <p className="text-sm text-gray-600">{mataUang.nama}</p>
+            </div>
           </div>
+          {hasPrice && (
+            <div className="flex items-center gap-1 text-green-600">
+              <Check className="w-4 h-4" />
+              <span className="text-xs font-medium">Set</span>
+            </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -323,14 +449,16 @@ export default function KupvaInputHarga() {
     );
   };
 
+  const { setCount, unsetCount } = getStatusStats();
+
   return (
     <div
-      className="min-h-screen mt-25 "
+      className="min-h-screen mt-25"
       style={{ backgroundColor: "hsl(34, 24%, 94%)" }}
     >
       <NavbarKupva />
-      <div className="container mx-auto px-6 py-8  ">
-        <div className="max-w-6xl mx-auto  ">
+      <div className="container mx-auto px-6 py-8">
+        <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-2">
               Input Harga Valas
@@ -338,6 +466,97 @@ export default function KupvaInputHarga() {
             <p className="text-gray-600">
               Perbarui harga mata uang untuk money changer Anda
             </p>
+          </div>
+
+          {/* Filter Section */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+              {/* Search */}
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Cari kode atau nama mata uang..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Filter Toggle */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
+              >
+                <Filter className="w-5 h-5" />
+                <span>Filter</span>
+                {showFilters ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+
+            {/* Advanced Filters */}
+            {showFilters && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex flex-wrap gap-4">
+                  {/* Status Filter */}
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Status:
+                    </label>
+                    <select
+                      value={filterStatus}
+                      onChange={(e) =>
+                        setFilterStatus(
+                          e.target.value as "all" | "set" | "unset"
+                        )
+                      }
+                      className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                      <option value="all">Semua</option>
+                      <option value="set">Sudah diset</option>
+                      <option value="unset">Belum diset</option>
+                    </select>
+                  </div>
+
+                  {/* Sort Filter */}
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Urutkan:
+                    </label>
+                    <select
+                      value={sortBy}
+                      onChange={(e) =>
+                        setSortBy(e.target.value as "kode" | "nama")
+                      }
+                      className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                      <option value="kode">Kode</option>
+                      <option value="nama">Nama</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Stats */}
+            <div className="flex flex-wrap gap-6 mt-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                {filteredMataUangList.length} mata uang ditampilkan
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Check className="w-4 h-4 text-green-500" />
+                {setCount} sudah diset
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <X className="w-4 h-4 text-red-500" />
+                {unsetCount} belum diset
+              </div>
+            </div>
           </div>
 
           {loading && (
@@ -354,11 +573,25 @@ export default function KupvaInputHarga() {
           )}
 
           {!loading && !error && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mataUangList.map((mataUang) => (
-                <HargaForm key={mataUang.id} mataUang={mataUang} />
-              ))}
-            </div>
+            <>
+              {filteredMataUangList.length === 0 ? (
+                <div className="bg-white rounded-xl shadow-md p-12 text-center">
+                  <div className="text-6xl mb-4">🔍</div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    Tidak ada mata uang ditemukan
+                  </h3>
+                  <p className="text-gray-500">
+                    Coba ubah filter pencarian atau reset filter
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredMataUangList.map((mataUang) => (
+                    <HargaForm key={mataUang.id} mataUang={mataUang} />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
